@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Plant Disease Detection</title>
+
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #fafdfe;
+        background: url("../images/hero.jpg") center/cover no-repeat;
+      }
+
+      section {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        background-color: rgba(
+          255,
+          255,
+          255,
+          0.8
+        ); /* Add a semi-transparent white background */
+        backdrop-filter: blur(5px); /* Apply a blur effect to the background */
+      }
+
+      .container {
+        background-color: #fff;
+        box-shadow: 0 8px 24px rgba(149, 157, 165, 0.2);
+        padding: 30px;
+        border-radius: 8px;
+        text-align: center;
+        width: 350px !important;
+      }
+
+      h1 {
+        margin-bottom: 20px;
+        color: #333;
+      }
+
+      form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      input[type="file"] {
+        margin-bottom: 15px;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        cursor: pointer;
+        display: none;
+      }
+
+      label {
+        width: 100%;
+        padding: 10px;
+        border: 2px dotted #ddd;
+        border-radius: 4px;
+        cursor: pointer;
+        height: 100px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      label:hover {
+        background-color: #f9f9f9;
+      }
+
+      .btns {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      button {
+        padding: 16px 40px;
+        background-color: #f08605;
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        margin: 10px;
+        font-size: 17px;
+        font-weight: bold;
+      }
+
+      #cancel-button {
+        background-color: #f5f5f5;
+        color: #333;
+      }
+
+      button:hover {
+        background-color: #d87100;
+      }
+
+      #loading-message {
+        display: none;
+        margin-top: 20px;
+        color: #666;
+      }
+
+      #result-container {
+        margin-top: 20px;
+        color: #333;
+      }
+      .model{
+        font-size: 25px;
+        font-weight: bold;
+        text-decoration: underline;
+      }
+    </style>
+  </head>
+  <body>
+    <section>
+        <div>
+             <h1>Plant Disease Detection and Fertilizer Recommendation System</h1>
+        
+        <h1 class="model">VGG 19 Model</h1>
+        </div>
+      <div class="container">
+       
+        <form
+          id="upload-form"
+          action="/predict"
+          method="post"
+          enctype="multipart/form-data"
+        >
+          <input
+            type="file"
+            name="image"
+            id="file-input"
+            accept="image/*"
+            required
+          />
+          <label for="file-input" id="file-label"
+            >Choose or Drag & Drop Image Here</label
+          >
+          <div class="btns">
+            <button type="submit">Submit</button>
+            <button type="button" id="cancel-button">Cancel</button>
+          </div>
+          <div id="loading-message">Loading...</div>
+          <img id="uploaded-image" >
+        </form>
+        <div id="result-container"></div>
+      </div>
+    </section>
+
+    <script>
+      const fileInput = document.getElementById("file-input");
+      const fileLabel = document.getElementById("file-label");
+      const cancelButton = document.getElementById("cancel-button");
+      const loadingMessage = document.getElementById("loading-message");
+      const resultContainer = document.getElementById("result-container");
+    const uploadedImage = document.getElementById("uploaded-image");
+
+
+      fileInput.addEventListener("change", updateFileName);
+      cancelButton.addEventListener("click", clearData);
+
+      function updateFileName() {
+        const fileName = fileInput.value.split("\\").pop();
+        fileLabel.textContent = fileName || "Choose or Drag & Drop Image Here";
+      }
+
+      function clearData() {
+        fileInput.value = null;
+        fileLabel.textContent = "Choose or Drag & Drop Image Here";
+        resultContainer.innerHTML = "";
+        uploadedImage.src = ""; // Clear the uploaded image
+
+        hideLoadingMessage();
+      }
+
+      function showLoadingMessage() {
+        loadingMessage.style.display = "block";
+      }
+
+      function hideLoadingMessage() {
+        loadingMessage.style.display = "none";
+      }
+
+      document
+        .getElementById("upload-form")
+        .addEventListener("submit", function (e) {
+          e.preventDefault();
+          showLoadingMessage();
+
+          var formData = new FormData(this);
+
+          fetch("/predict", {
+            method: "POST",
+            body: formData,
+          })
+            .then((response) => response.json())
+            .then((data) => {
+              hideLoadingMessage();
+              resultContainer.innerHTML = `
+                    <p>Predicted Disease: ${data.predicted_disease}</p>
+                    <p>Recommended Fertilizer: ${data.recommended_fertilizer}</p>
+                    <p>All Predictions: ${data.all_predictions}</p>
+                `;
+                 uploadedImage.src = URL.createObjectURL(fileInput.files[0]); // Display the uploaded image
+
+            })
+            .catch((error) => {
+              hideLoadingMessage();
+              console.error("Error:", error);
+            });
+        });
+    </script>
+  </body>
+</html>
