@@ -1,0 +1,7 @@
+﻿disease,recommendation
+Potato___Early_Blight,"Keep soil around plants clean by removing garden debris.
+Prevent spore splash by adding a layer of organic compost.
+Use drip irrigation or soaker hoses to keep foliage dry.
+Apply copper-based fungicides early for optimal control."
+Potato___Late_Blight,"""['Fertilizer_D', 'Fertilizer_E']"""
+Potato___healthy,Healthy leaf only need care not need any fertilizers.

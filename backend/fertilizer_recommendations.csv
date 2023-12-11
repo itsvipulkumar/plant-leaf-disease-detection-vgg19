@@ -1,4 +1,6 @@
 ﻿disease,recommendation
-Potato___Early_Blight,Burn or bag infected plant parts. 
-Potato___Late_Blight,use a tank mixture with the full application rate of fluazinam-containing fungicides.
-Potato___healthy,No need fertilizer
+Potato___Early_Blight,"Keep soil around plants clean by removing garden debris.
+Prevent spore splash by adding a layer of organic compost.
+"
+Potato___Late_Blight,"""['Fertilizer_C', 'Fertilizer_D']"""
+Potato___healthy,Your Plant is healthy

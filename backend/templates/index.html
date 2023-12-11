@@ -11,7 +11,7 @@
         padding: 0;
         font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
         background-color: #fafdfe;
-        background: url("../images/hero.jpg") center/cover no-repeat;
+        background: url("https://www.worldatlas.com/r/w1200/upload/c4/d1/91/shutterstock-681452188.jpg") center/cover no-repeat;
       }
 
       section {
@@ -24,18 +24,18 @@
           255,
           255,
           255,
-          0.8
-        ); /* Add a semi-transparent white background */
-        backdrop-filter: blur(5px); /* Apply a blur effect to the background */
+          0.4
+        ); 
+        backdrop-filter: blur(3px); 
       }
 
       .container {
         background-color: #fff;
         box-shadow: 0 8px 24px rgba(149, 157, 165, 0.2);
-        padding: 30px;
+        padding: 40px 40px;
         border-radius: 8px;
         text-align: center;
-        width: 350px !important;
+        width: 540px !important;
       }
 
       h1 {
@@ -109,9 +109,10 @@
 
       #result-container {
         margin-top: 20px;
-        color: #333;
+        color: #000;
+        font-weight: 500;
       }
-      .model{
+      .model {
         font-size: 25px;
         font-weight: bold;
         text-decoration: underline;
@@ -120,13 +121,12 @@
   </head>
   <body>
     <section>
-        <div>
-             <h1>Plant Disease Detection and Fertilizer Recommendation System</h1>
-        
-        <h1 class="model">VGG 19 Model</h1>
-        </div>
+      <div>
+        <h1>Plant Disease Detection and Fertilizer Recommendation System</h1>
+
+        <!-- <h1 class="model">VGG 19 Model</h1> -->
+      </div>
       <div class="container">
-       
         <form
           id="upload-form"
           action="/predict"
@@ -144,13 +144,15 @@
             >Choose or Drag & Drop Image Here</label
           >
           <div class="btns">
-            <button type="submit">Submit</button>
+            <button type="submit">Check</button>
             <button type="button" id="cancel-button">Cancel</button>
           </div>
           <div id="loading-message">Loading...</div>
-          <img id="uploaded-image" >
+          <img id="uploaded-image" />
         </form>
         <div id="result-container"></div>
+        <!-- <img src="" alt=""> -->
+        
       </div>
     </section>
 
@@ -160,8 +162,7 @@
       const cancelButton = document.getElementById("cancel-button");
       const loadingMessage = document.getElementById("loading-message");
       const resultContainer = document.getElementById("result-container");
-    const uploadedImage = document.getElementById("uploaded-image");
-
+      const uploadedImage = document.getElementById("uploaded-image");
 
       fileInput.addEventListener("change", updateFileName);
       cancelButton.addEventListener("click", clearData);
@@ -203,13 +204,24 @@
             .then((response) => response.json())
             .then((data) => {
               hideLoadingMessage();
+
+
+              // Find the index of the highest prediction
+        const highestPredictionIndex = data.all_predictions.indexOf(Math.max(...data.all_predictions));
+        const highestPredictionValue = data.all_predictions[highestPredictionIndex]*100;
+                    
+                     
+                const bgColor = data.predicted_disease.includes("Blight") ? "red" : "green";
+
               resultContainer.innerHTML = `
-                    <p>Predicted Disease: ${data.predicted_disease}</p>
+                  <p style="background-color: ${bgColor}; padding: 10px; color:#fff; font-weight:bold; font-size:20px;">Predicted Disease: ${data.predicted_disease}</p>
+                    <p>Confident: ${highestPredictionValue.toFixed(2)}%</p>
                     <p>Recommended Fertilizer: ${data.recommended_fertilizer}</p>
                     <p>All Predictions: ${data.all_predictions}</p>
-                `;
-                 uploadedImage.src = URL.createObjectURL(fileInput.files[0]); // Display the uploaded image
+                    
 
+                `;
+              uploadedImage.src = URL.createObjectURL(fileInput.files[0]); // Display the uploaded image
             })
             .catch((error) => {
               hideLoadingMessage();
