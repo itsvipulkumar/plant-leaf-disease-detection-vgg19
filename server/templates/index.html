@@ -9,9 +9,10 @@
       body {
         margin: 0;
         padding: 0;
-        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         background-color: #fafdfe;
-        background: url("https://www.worldatlas.com/r/w1200/upload/c4/d1/91/shutterstock-681452188.jpg") center/cover no-repeat;
+        background: url('https://www.worldatlas.com/r/w1200/upload/c4/d1/91/shutterstock-681452188.jpg')
+          center/cover no-repeat;
       }
 
       section {
@@ -20,13 +21,8 @@
         align-items: center;
         justify-content: center;
         min-height: 100vh;
-        background-color: rgba(
-          255,
-          255,
-          255,
-          0.4
-        ); 
-        backdrop-filter: blur(3px); 
+        background-color: rgba(255, 255, 255, 0.4);
+        backdrop-filter: blur(3px);
       }
 
       .container {
@@ -49,7 +45,7 @@
         align-items: center;
       }
 
-      input[type="file"] {
+      input[type='file'] {
         margin-bottom: 15px;
         padding: 10px;
         border: 1px solid #ddd;
@@ -152,71 +148,77 @@
         </form>
         <div id="result-container"></div>
         <!-- <img src="" alt=""> -->
-        
       </div>
     </section>
 
     <script>
-      const fileInput = document.getElementById("file-input");
-      const fileLabel = document.getElementById("file-label");
-      const cancelButton = document.getElementById("cancel-button");
-      const loadingMessage = document.getElementById("loading-message");
-      const resultContainer = document.getElementById("result-container");
-      const uploadedImage = document.getElementById("uploaded-image");
+      const fileInput = document.getElementById('file-input');
+      const fileLabel = document.getElementById('file-label');
+      const cancelButton = document.getElementById('cancel-button');
+      const loadingMessage = document.getElementById('loading-message');
+      const resultContainer = document.getElementById('result-container');
+      const uploadedImage = document.getElementById('uploaded-image');
 
-      fileInput.addEventListener("change", updateFileName);
-      cancelButton.addEventListener("click", clearData);
+      fileInput.addEventListener('change', updateFileName);
+      cancelButton.addEventListener('click', clearData);
 
       function updateFileName() {
-        const fileName = fileInput.value.split("\\").pop();
-        fileLabel.textContent = fileName || "Choose or Drag & Drop Image Here";
+        const fileName = fileInput.value.split('\\').pop();
+        fileLabel.textContent = fileName || 'Choose or Drag & Drop Image Here';
       }
 
       function clearData() {
         fileInput.value = null;
-        fileLabel.textContent = "Choose or Drag & Drop Image Here";
-        resultContainer.innerHTML = "";
-        uploadedImage.src = ""; // Clear the uploaded image
+        fileLabel.textContent = 'Choose or Drag & Drop Image Here';
+        resultContainer.innerHTML = '';
+        uploadedImage.src = ''; // Clear the uploaded image
 
         hideLoadingMessage();
       }
 
       function showLoadingMessage() {
-        loadingMessage.style.display = "block";
+        loadingMessage.style.display = 'block';
       }
 
       function hideLoadingMessage() {
-        loadingMessage.style.display = "none";
+        loadingMessage.style.display = 'none';
       }
 
       document
-        .getElementById("upload-form")
-        .addEventListener("submit", function (e) {
+        .getElementById('upload-form')
+        .addEventListener('submit', function (e) {
           e.preventDefault();
           showLoadingMessage();
 
           var formData = new FormData(this);
 
-          fetch("/predict", {
-            method: "POST",
+          fetch('/predict', {
+            method: 'POST',
             body: formData,
           })
             .then((response) => response.json())
             .then((data) => {
               hideLoadingMessage();
 
-
               // Find the index of the highest prediction
-        const highestPredictionIndex = data.all_predictions.indexOf(Math.max(...data.all_predictions));
-        const highestPredictionValue = data.all_predictions[highestPredictionIndex]*100;
-                    
-                     
-                const bgColor = data.predicted_disease.includes("Blight") ? "red" : "green";
+              const highestPredictionIndex = data.all_predictions.indexOf(
+                Math.max(...data.all_predictions)
+              );
+              const highestPredictionValue =
+                data.all_predictions[highestPredictionIndex] * 100;
+
+              const bgColor = data.predicted_disease.includes('Blight')
+                ? 'red'
+                : 'green';
 
               resultContainer.innerHTML = `
-                  <p style="background-color: ${bgColor}; padding: 10px; color:#fff; font-weight:bold; font-size:20px;">Predicted Disease: ${data.predicted_disease}</p>
+                  <p style="background-color: ${bgColor}; padding: 10px; color:#fff; font-weight:bold; font-size:20px;">Predicted Disease: ${
+                data.predicted_disease
+              }</p>
                     <p>Confident: ${highestPredictionValue.toFixed(2)}%</p>
-                    <p>Recommended Fertilizer: ${data.recommended_fertilizer}</p>
+                    <p>Recommended Fertilizer: ${
+                      data.recommended_fertilizer
+                    }</p>
                     <p>All Predictions: ${data.all_predictions}</p>
                     
 
@@ -225,7 +227,7 @@
             })
             .catch((error) => {
               hideLoadingMessage();
-              console.error("Error:", error);
+              console.error('Error:', error);
             });
         });
     </script>

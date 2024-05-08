@@ -7,7 +7,7 @@ import io
 import os
 import pandas as pd
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder='../build', static_url_path='/')
 
 # Load the pre-trained VGG19 model
 model_path = os.path.join(os.getcwd(), '../model/vgg19model_v1.h5')
@@ -22,7 +22,7 @@ fertilizer_recommendations = dict(zip(df['disease'], df['recommendation']))
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    return app.send_static_file('index.html')
 
 @app.route('/predict', methods=['POST'])
 def predict():

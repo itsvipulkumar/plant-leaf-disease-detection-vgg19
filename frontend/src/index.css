@@ -1,13 +1,188 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #fafdfe;
+    background: url('https://www.worldatlas.com/r/w1200/upload/c4/d1/91/shutterstock-681452188.jpg') center/cover no-repeat;
+  }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
-}
+  section {
+    /* display: flex; */
+    /* flex-direction: column;
+align-items: center;
+justify-content: center; */
+    min-height: 100vh;
+    background-color: rgba(255, 255, 255, 0.4);
+    backdrop-filter: blur(3px);
+  }
+
+  .home_container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+  }
+
+  .heading {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
+  }
+
+  .container {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    /* align-items: center; */
+
+    width: 100%;
+  }
+
+  @media screen and (max-width:1000px) {
+
+    .container {
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .upload_container {
+      width: 80% !important;
+    }
+
+    .result_container {
+      width: 80% !important;
+      margin-left: 0 !important;
+    }
+
+  }
+
+  .upload_container {
+    background-color: #fff;
+    box-shadow: 0 8px 24px rgba(149, 157, 165, 0.2);
+    padding: 40px 40px;
+    border-radius: 8px;
+    text-align: center;
+    width: 540px;
+    flex-basis: 60;
+  }
+
+  .result_container {
+    margin-left: 40px;
+    /* flex-basis: 40; */
+    width: 400px;
+
+    /* border: 1px solid; */
+  }
+
+  .result_container .result {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+
+
+  }
+
+  .report-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 8px;
+  }
+
+  .report-description {
+    font-size: 1rem;
+    color: #eee;
+  }
+
+  .metric {
+    /* background-color: #f4f5f7; */
+    border-radius: 8px;
+    padding: 8px;
+  }
+
+  .metric-label {
+    font-size: 0.875rem;
+    font-weight: bold;
+    margin-bottom: 4px;
+  }
+
+  .metric-value {
+    font-size: 1.25rem;
+    font-weight: bold;
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  input[type='file'] {
+    margin-bottom: 15px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    cursor: pointer;
+    display: none;
+  }
+
+  label {
+    width: 100%;
+    padding: 10px;
+    border: 2px dotted #ddd;
+    border-radius: 4px;
+    cursor: pointer;
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  label:hover {
+    background-color: #f9f9f9;
+  }
+
+  .btns {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  button {
+    padding: 16px 40px;
+    background-color: #f08605;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin: 10px;
+    font-size: 17px;
+    font-weight: bold;
+  }
+
+  #cancel-button {
+    background-color: #f5f5f5;
+    color: #333;
+  }
+
+  button:hover {
+    background-color: #d87100;
+  }
+
+  #loading-message {
+    display: none;
+    margin-top: 20px;
+    color: #666;
+  }
+
+  #result-container {
+    margin-top: 20px;
+    color: #000;
+    font-weight: 500;
+  }
+
+  .model {
+    font-size: 25px;
+    font-weight: bold;
+    text-decoration: underline;
+  }
