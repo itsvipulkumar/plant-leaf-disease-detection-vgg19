@@ -1,6 +1,6 @@
 ﻿disease,recommendation
-Potato___Early_Blight,"Keep soil around plants clean by removing garden debris.
-Prevent spore splash by adding a layer of organic compost.
+Potato___Early_Blight,"1. Keep soil around plants clean by removing garden debris.
+Prevent spore splash by adding a layer of organic compost. 2.  Remove infected leaves and garden debris to prevent spread
 "
-Potato___Late_Blight,"""['Fertilizer_C', 'Fertilizer_D']"""
+Potato___Late_Blight,"1. Apply a fungicide containing mancozeb or chlorothalonil at the first sign of disease. 2.  Ensure good drainage and avoid waterlogging. 3.Remove and destroy infected plants immediately to prevent spread"
 Potato___healthy,Your Plant is healthy
